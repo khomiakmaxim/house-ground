@@ -1,7 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework><!--specifies a target framework for application-->
+  <!--netcoreapp3.1 - is a target framework moniker-->
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  <!--There are several hosting models in asp OutOfProcess(Kestrel) is default
+  InProcess is IIS(w3wp.exe)
+  InProcess hosting allows mush faster performance
+  OutOfProcess has internal(Kestrel) and external(IIS or Nginx or Apache) servers-->
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
 
 </Project>
