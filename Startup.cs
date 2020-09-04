@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GroundHouse.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,8 +25,12 @@ namespace GroundHouse
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //AddMvcCore fails sometimes
             services.AddMvc(options => options.EnableEndpointRouting = false);//adding mvc services to dependency injection container
-
+            services.AddSingleton<IHouseRepository, MockHouseRepository>();//convenient instrument
+            //singleton - one time per application lifetime
+            //trancient - one time per time it is requested
+            //scoped - one per request within the scope(one per each http but same within other requests(like ajax))
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,14 +70,17 @@ namespace GroundHouse
             //must be registered before useStaticFiles()
             //there is a line that can replace above two middlewares by one (k12, k12 also is about customizing use kit)
             #endregion
+            //order is important
             app.UseStaticFiles();//this middleware allows us to use static files and after
                                  //that reverses pipeline(if url was ment to retrieve an existing static file)
             app.UseMvcWithDefaultRoute();//adding mvc to pipeline
 
-            app.Run(async (context) =>
-            {                
-                await context.Response.WriteAsync("Hello world");
-            });
+            #region tool for printing whenewer you want
+            //app.Run(async (context) =>
+            //{                
+            //    await context.Response.WriteAsync("Hello world");
+            //});
+            #endregion
 
             #region not project
             //app.UseRouting();//probably some route roules for mvc

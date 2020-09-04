@@ -18,3 +18,15 @@ C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\staticwebassets
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.dll
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.pdb
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.genruntimeconfig.cache
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\GroundHouse.Views.dll
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\GroundHouse.Views.pdb
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.RazorAssemblyInfo.cache
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.RazorAssemblyInfo.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.TagHelpers.input.cache
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.TagHelpers.output.cache
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.RazorCoreGenerate.cache
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.RazorTargetAssemblyInfo.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.Views.pdb
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.csproj.CopyComplete
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Home\Details.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Home\Test.cshtml.g.cs
