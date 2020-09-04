@@ -24,31 +24,54 @@ namespace GroundHouse
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options => options.EnableEndpointRouting = false);//adding mvc services to dependency injection container
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {            
+        {
             //env is an info object that "tells" us everything about environment
             //app is and object that allows us to do certain actions
-            if (env.IsDevelopment())
+            if (env.IsDevelopment())//as early as possible
             {
-                app.UseDeveloperExceptionPage();
+                //customizing
+                DeveloperExceptionPageOptions developerExceptionPageOptions = new DeveloperExceptionPageOptions
+                {
+                    SourceCodeLineCount = 7//7 lines will be shown 
+                };
+                app.UseDeveloperExceptionPage(developerExceptionPageOptions);//middleware for exceptions(alternative
+            }
+            else if (env.IsStaging() || env.IsProduction() || env.IsEnvironment("XYZ"))//for yellow SOD in Framework)
+            {
+                //app.UseExceptionHandler("/Error");//?
             }
 
-            DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();//instance of object for serving default files system
-            defaultFilesOptions.DefaultFileNames.Clear();//clears all previous settings
-            defaultFilesOptions.DefaultFileNames.Add("foo.html");
-            app.UseDefaultFiles(defaultFilesOptions);//allows to use default documents like default.html etc
+
+            //app.UseDefaultFiles();//middleware for default files
+
+            #region custom default file
+            //FileServerOptions fileServerOptions = new FileServerOptions();
+            //fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            //fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");
+            //app.UseFileServer(fileServerOptions);
+            #endregion
+
+            #region alternative
+            //DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();//instance of object for serving default files system
+            //defaultFilesOptions.DefaultFileNames.Clear();//clears all previous settings
+            //defaultFilesOptions.DefaultFileNames.Add("foo.html");
+            //app.UseDefaultFiles(defaultFilesOptions);//allows to use default documents like default.html etc
             //must be registered before useStaticFiles()
             //there is a line that can replace above two middlewares by one (k12, k12 also is about customizing use kit)
-
+            #endregion
             app.UseStaticFiles();//this middleware allows us to use static files and after
                                  //that reverses pipeline(if url was ment to retrieve an existing static file)
+            app.UseMvcWithDefaultRoute();//adding mvc to pipeline
 
             app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Response");
+            {                
+                await context.Response.WriteAsync("Hello world");
             });
 
             #region not project
@@ -88,7 +111,7 @@ namespace GroundHouse
             //        .WriteAsync("Hello world");
             //    });
             //});
-            #endregion notpoject
+            #endregion
         }
     }
 }
