@@ -73,8 +73,15 @@ namespace GroundHouse
             //order is important
             app.UseStaticFiles();//this middleware allows us to use static files and after
                                  //that reverses pipeline(if url was ment to retrieve an existing static file)
-            app.UseMvcWithDefaultRoute();//adding mvc to pipeline
+                                 //app.UseMvcWithDefaultRoute();//adding mvc to pipeline
 
+            //app.UseMvc();//adds mvc without any routes
+            //app.UseMvcWithDefaultRoute()
+            //above and below are identical
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
             #region tool for printing whenewer you want
             //app.Run(async (context) =>
             //{                

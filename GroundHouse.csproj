@@ -10,9 +10,4 @@
   OutOfProcess has internal(Kestrel) and external(IIS or Nginx or Apache) servers-->
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\js\" />
-  </ItemGroup>
-
 </Project>

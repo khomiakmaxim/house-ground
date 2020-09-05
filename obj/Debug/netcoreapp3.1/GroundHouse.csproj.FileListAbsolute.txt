@@ -30,3 +30,8 @@ C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.Vie
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.csproj.CopyComplete
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Home\Details.cshtml.g.cs
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Home\Test.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\libman.json

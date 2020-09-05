@@ -18,9 +18,15 @@ namespace GroundHouse.Models
                 new House() {Id = 3, OwnerEmail = "owner3@gmail.com", Address = "Address3", Price = 3000, Type = "Type3" },
             };
         }
+
         public House GetHouse(int id)
         {
             return _houseList.FirstOrDefault(e => e.Id == id);
+        }
+
+        public IEnumerable<House> GetAllHouses()
+        {
+            return _houseList;
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿@model List<House>
+
+@{   
+    ViewBag.Title = "House List";
+}
+
+
+<div class="card-deck">
+    @foreach (var house in Model)
+    { 
+        <div class="card m-3">
+            <div class="card-header text-center">
+                <h3>@house.Address</h3>
+            </div>
+            <img class="card-img-top" src="~/images/noimage.jpg" />
+            <div class="card-footer text-center">
+                @*<a href="/home/details/@house.Id" class="btn btn-primary">View</a> or*@
+                <a asp-controller="home" asp-action="details" asp-route-id="@house.Id" class="btn btn-primary">View</a>
+                <a href="#" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+
+@*we are doing this because of all code above is rendered by layout and scripts have better to be in the bottom of the page*@
+@section Scripts {
+    <script src="~/js/CustomScript.js"></script>
+}

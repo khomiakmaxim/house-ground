@@ -7,6 +7,7 @@ namespace GroundHouse.Models
 {
     public interface IHouseRepository
     {
-        House GetHouse(int id);        
+        House GetHouse(int id);
+        IEnumerable<House> GetAllHouses();
     }
 }

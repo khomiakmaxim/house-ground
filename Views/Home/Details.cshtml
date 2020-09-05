@@ -1,11 +1,29 @@
-﻿@using GroundHouse.Models
-@model House
+﻿@model HomeDetailsViewModel
+@*above line isn't necessary it only provides intellisense*@
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    @Model.Address
-</body>
-</html>
+@{    
+    ViewBag.Title = "House Details";
+}
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.House.Address</h1>
+            </div>
+
+            <div class="card-body text-center">
+                <img class="card-img-top" src="~/images/noimage.jpg" />
+
+                <h4>Owner's email: @Model.House.OwnerEmail</h4>
+                <h4>Type: @Model.House.Type</h4>
+                <h4>Price: @Model.House.Price</h4>
+
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="home" asp-action="index" class="btn btn-primary">Back</a>
+                <a href="#" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

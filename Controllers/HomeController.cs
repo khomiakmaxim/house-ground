@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GroundHouse.Models;
+using GroundHouse.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GroundHouse.Controllers//it is the controller who handles the http request and gives http response
@@ -16,15 +17,20 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
             _houseRepository = houseRepository;
         }
         
-        public string Index()
+        public IActionResult Index()
         {
-            return _houseRepository.GetHouse(1).Address;
+            var model = _houseRepository.GetAllHouses();
+            return View(model);
         }
 
-        public IActionResult Details()
+        public IActionResult Details(int? id)
         {
-            House model = _houseRepository.GetHouse(1);
-            return View("Test");
+            HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+            {
+                House = _houseRepository.GetHouse(id??1),
+                PageTitle = "Details page"
+            };   
+            return View(homeDetailsViewModel);
         }
     }
 }
