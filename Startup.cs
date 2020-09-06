@@ -6,6 +6,7 @@ using GroundHouse.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +26,10 @@ namespace GroundHouse
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<AppDbContext>(options =>
+                        options.UseSqlServer(_config.GetConnectionString("HouseDbConnection")));//adding db setting in services
+            //services.AddDbContext<AppDbContext>();//differs by using the same instance of AppDbContext each time
+
             //AddMvcCore fails sometimes
             services.AddMvc(options => options.EnableEndpointRouting = false);//adding mvc services to dependency injection container
             services.AddSingleton<IHouseRepository, MockHouseRepository>();//convenient instrument

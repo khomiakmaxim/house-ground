@@ -16,21 +16,39 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
         {
             _houseRepository = houseRepository;
         }
-        
-        public IActionResult Index()
+
+        [HttpGet]
+        public ViewResult Create()
         {
-            var model = _houseRepository.GetAllHouses();
-            return View(model);
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(House house)
+        {
+            if (ModelState.IsValid)
+            {
+                House newHouse = _houseRepository.Add(house);
+                return RedirectToAction("details", new { id = house.Id });
+            }
+
+            return View();
         }
 
         public IActionResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-                House = _houseRepository.GetHouse(id??1),
+                House = _houseRepository.GetHouse(id ?? 1),
                 PageTitle = "Details page"
-            };   
+            };
             return View(homeDetailsViewModel);
         }
+
+        public IActionResult Index()
+        {
+            var model = _houseRepository.GetAllHouses();
+            return View(model);
+        }        
     }
 }
