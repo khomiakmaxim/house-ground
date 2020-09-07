@@ -32,7 +32,7 @@ namespace GroundHouse
 
             //AddMvcCore fails sometimes
             services.AddMvc(options => options.EnableEndpointRouting = false);//adding mvc services to dependency injection container
-            services.AddSingleton<IHouseRepository, MockHouseRepository>();//convenient instrument
+            services.AddScoped<IHouseRepository, SQLHouseRepository>();//convenient instrument
             //singleton - one time per application lifetime
             //trancient - one time per time it is requested
             //scoped - one per request within the scope(one per each http but same within other requests(like ajax))

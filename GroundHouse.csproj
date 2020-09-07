@@ -11,7 +11,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200907071720_AddPhotoPathColumn.cs" />
+    <Compile Remove="Migrations\20200907071720_AddPhotoPathColumn.Designer.cs" />
+    <Compile Remove="Migrations\20200907074124_AddSomeProperty.cs" />
+    <Compile Remove="Migrations\20200907074124_AddSomeProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200907074706_AddPhotoPathColumn.cs" />
+    <Compile Remove="Migrations\20200907074706_AddPhotoPathColumn.Designer.cs" />
+    <Compile Remove="Migrations\20200907074902_AddSomePropertyColumn.cs" />
+    <Compile Remove="Migrations\20200907074902_AddSomePropertyColumn.Designer.cs" />
+    <Compile Remove="Migrations\20200907084559_UpdatedDomainPriceConstraint.cs" />
+    <Compile Remove="Migrations\20200907084559_UpdatedDomainPriceConstraint.Designer.cs" />
+    <Compile Remove="Migrations\20200907090604_UpdatedPriceConstraintInDomain.cs" />
+    <Compile Remove="Migrations\20200907090604_UpdatedPriceConstraintInDomain.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.2" />
   </ItemGroup>
 

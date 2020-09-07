@@ -35,5 +35,28 @@ namespace GroundHouse.Models
         {
             return _houseList;
         }
+
+        public House Update(House houseChanges)
+        {
+            House house = _houseList.FirstOrDefault(h => houseChanges.Id == h.Id);
+            if (house != null)
+            {
+                house.Address = houseChanges.Address;
+                house.OwnerEmail = houseChanges.OwnerEmail;
+                house.Type = houseChanges.Type;
+                house.Price = houseChanges.Price;
+            }
+            return house;
+        }
+
+        public House Delete(int id)
+        {
+            House house = _houseList.FirstOrDefault(h => h.Id == id);
+            if (house != null)
+            {
+                _houseList.Remove(house);
+            }
+            return house;
+        }
     }
 }

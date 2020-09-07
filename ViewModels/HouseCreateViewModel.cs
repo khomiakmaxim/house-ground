@@ -1,15 +1,15 @@
-﻿using System;
+﻿using GroundHouse.Models;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GroundHouse.Models
+namespace GroundHouse.ViewModels
 {
-    public class House
-    {
-        public int Id { get; set; }
-
+    public class HouseCreateViewModel
+    {       
         [Required]
         [EmailAddress]
         [MaxLength(50, ErrorMessage = "Address should contain <= 50 characters")]
@@ -21,10 +21,10 @@ namespace GroundHouse.Models
 
         [Required]
         public Tpe? Type { get; set; }
-        
+
         [Required, Range(100, 100000000)]
         public int? Price { get; set; }
 
-        public string PhotoPath { get; set; }
+        public IFormFile Photo { get; set; }//for file uploading
     }
 }

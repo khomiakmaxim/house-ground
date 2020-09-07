@@ -10,5 +10,7 @@ namespace GroundHouse.Models
         House GetHouse(int id);
         IEnumerable<House> GetAllHouses();
         House Add(House house);
+        House Update(House houseChanges);
+        House Delete(int id);
     }
 }
