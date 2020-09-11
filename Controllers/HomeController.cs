@@ -47,6 +47,7 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
                     Address = model.Address,
                     OwnerEmail = model.OwnerEmail,
                     Type = model.Type,
+                    Price = model.Price,
                     PhotoPath = uniqueFileName
                 };
 
