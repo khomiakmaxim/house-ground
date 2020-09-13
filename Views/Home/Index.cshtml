@@ -2,17 +2,19 @@
 
 @{   
     ViewBag.Title = "House List";
+
 }
 
 
 <div class="card-deck">
     @foreach (var house in Model)
-    { 
+    {
+        var photoPath = "~/images/" + (house.PhotoPath ?? "noimage.jpg");
         <div class="card m-3" style="min-width: 18rem; max-width: 30.5%">
             <div class="card-header text-center">
                 <h3>@house.Address</h3>
             </div>
-            <img class="card-img-top" src="~/images/noimage.jpg" 
+            <img class="card-img-top imageThumbnail" src=@photoPath 
                  asp-append-version="true"/>@*this will redownload images from server each time after they will change*@
             <div class="card-footer text-center">
                 @*<a href="/home/details/@house.Id" class="btn btn-primary">View</a> or*@
