@@ -54,7 +54,12 @@ namespace GroundHouse
             }
             else if (env.IsStaging() || env.IsProduction() || env.IsEnvironment("XYZ"))//for yellow SOD in Framework)
             {
-                //app.UseExceptionHandler("/Error");//?
+                app.UseExceptionHandler("/Error");//for global errors handling
+
+                //app.UseStatusCodePages();//just shows status code
+                //app.UseStatusCodePagesWithRedirects("/Error/{0}");//400-500 range
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");//it somehow puts the status code in placeholder here
+                //there is actually difference between ReExecute and Redirects
             }
 
 

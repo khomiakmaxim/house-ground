@@ -15,34 +15,10 @@ namespace GroundHouse.Models
                 new House
                 {
                     Id = 1,
-                    Address = "DefaultAddress",
+                    Address = "ModelBuilder",
                     Type = Tpe.Cottage,
-                    OwnerEmail = "default@gmail.com",
+                    OwnerEmail = "builder@gmail.com",
                     Price = 10000
-                },
-                new House
-                {
-                    Id = 2,
-                    Address = "DefaultAddress2",
-                    Type = Tpe.Villa,
-                    OwnerEmail = "default2@gmail.com",
-                    Price = 20000
-                },
-                new House
-                {
-                    Id = 3,
-                    Address = "DefaultAddress3",
-                    Type = Tpe.Crib,
-                    OwnerEmail = "default3@gmail.com",
-                    Price = 30000
-                },
-                new House
-                {
-                    Id = 4,
-                    Address = "DefaultAddress4",
-                    Type = Tpe.Crib,
-                    OwnerEmail = "default4@gmail.com",
-                    Price = 40000
                 }
             );
         }
