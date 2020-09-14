@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kG1xKa9FSDVS/UJFv16n5LPYl7fq/StBx+mjmgEsk6PjNkMgb/UwPegSZ+hsqPoHkTqN7Yh6HtVyBZ2mJ5/3wQ==",
+  "dgSpecHash": "v0h0vdD2fadR+CBjt7fr9I6sAFjKuiWy0hCAIrQalLvEQxUO8wIBlc8wiUYeK4Z2QOnjboPijVpwQ1eSeBDk/w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Maksym\\source\\repos\\GroundHouse\\GroundHouse.csproj",
   "expectedPackageFiles": [
@@ -37,6 +37,9 @@
     "C:\\Users\\Maksym\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\mysqlconnector\\0.61.0\\mysqlconnector.0.61.0.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\Maksym\\.nuget\\packages\\nlog\\4.7.2\\nlog.4.7.2.nupkg.sha512",
+    "C:\\Users\\Maksym\\.nuget\\packages\\nlog.extensions.logging\\1.6.4\\nlog.extensions.logging.1.6.4.nupkg.sha512",
+    "C:\\Users\\Maksym\\.nuget\\packages\\nlog.web.aspnetcore\\4.9.3\\nlog.web.aspnetcore.4.9.3.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\3.1.2\\pomelo.entityframeworkcore.mysql.3.1.2.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\pomelo.jsonobject\\2.2.1\\pomelo.jsonobject.2.2.1.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
