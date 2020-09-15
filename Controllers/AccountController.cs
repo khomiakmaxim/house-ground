@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GroundHouse.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GroundHouse.Controllers
 {
+    [Authorize]//if to use this attribute on controller level it will be applicable to all actions inside it
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
@@ -19,22 +21,47 @@ namespace GroundHouse.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+
+        //for server side email-in-use check
+        //[HttpGet][HttpPost] or
+        [AcceptVerbs("Get", "Post")]//get request cause of validation is applying get request by it's own
+        [AllowAnonymous]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return Json(true);//black box(it is actually because of jquery ajax call)
+            }
+            else
+            { 
+                return Json($"Email {email} is already in use");            
+            }
+        }
+
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
-        {
-            if (ModelState.IsValid)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)//it will actually be mapped here from view                
+        {                                                                             //it is also possibly because we've applied the
+            if (ModelState.IsValid)                                                     //same name for paparameter as it is in qurey string
             {
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password,
                                                                     model.RememberMe, false);//last parameter for locking out account on failure
 
                 if (result.Succeeded)
-                {                    
+                {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);//for safety - Redirect(returnUrl) is unsafe
+                    }
                     return RedirectToAction("index", "home");
                 }
 
@@ -46,7 +73,7 @@ namespace GroundHouse.Controllers
 
 
         //it is smart to logout user using post request
-        [HttpPost]
+        [HttpPost]        
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
@@ -55,12 +82,14 @@ namespace GroundHouse.Controllers
 
         //if there is no either [HttpGet] or [HttpPost] attribute this method will do both
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)

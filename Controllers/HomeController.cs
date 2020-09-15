@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GroundHouse.Controllers//it is the controller who handles the http request and gives http response
 {//actions are just methods who do the do
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IHouseRepository _houseRepository;
@@ -100,15 +101,13 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
             return uniqueFileName;
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpGet]        
         public ViewResult Create()
         {
             return View();
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpPost]        
         public IActionResult Create(HouseCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -131,6 +130,8 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
             return View();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Details(int? id)
         {
             //firstly, goes checking for not found
@@ -160,6 +161,8 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
             return View(homeDetailsViewModel);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = _houseRepository.GetAllHouses();

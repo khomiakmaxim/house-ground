@@ -6,8 +6,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <environment include="Development">        
+    <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>@*those 3 jquery files allow us to validate on the client*@
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
         <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
@@ -20,7 +22,7 @@
               asp-fallback-test-value="absolute"
               asp-suppress-fallback-integrity="true">@*this last attribute is responsible for denying hash checking if it recieves data from
                                                     our own server*@
-            <script src="~/lib/jquery/jquery.min.js"></script>
+            <script src="~/lib/jquery/jquery.min.js"></script>@*fix code dublication later*@
             <script src="~/lib/jquery-validate/jquery.validate.js"></script>
             <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
             <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
