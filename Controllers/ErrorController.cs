@@ -52,9 +52,9 @@ namespace GroundHouse.Controllers
             logger.LogError($"The path {exceptionDetails.Path}" +
                 $" threw an exception {exceptionDetails.Error}");            
 
-            ViewBag.ExceptionPath = exceptionDetails.Path;
-            ViewBag.ExceptionMessage = exceptionDetails.Error.Message;
-            ViewBag.StackTrace = exceptionDetails.Error.StackTrace;
+            //ViewBag.ExceptionPath = exceptionDetails.Path;
+            //ViewBag.ExceptionMessage = exceptionDetails.Error.Message;
+            //ViewBag.StackTrace = exceptionDetails.Error.StackTrace;
 
             return View("Error");
         }

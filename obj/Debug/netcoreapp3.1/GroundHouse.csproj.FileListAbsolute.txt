@@ -85,5 +85,12 @@ C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\nlog.config
 C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\NLog.dll
 C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\NLog.Extensions.Logging.dll
 C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\NLog.Web.AspNetCore.dll
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.csproj.CoreCompileInputs.cache
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs

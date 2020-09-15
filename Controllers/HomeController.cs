@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GroundHouse.Models;
 using GroundHouse.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,9 +30,16 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            House house = _houseRepository.GetHouse(id ?? 1);
 
-            HouseEditViewModel model = new HouseEditViewModel()
+            House house = _houseRepository.GetHouse(id ?? 4);
+
+            if (house == null)
+            {
+                Response.StatusCode = 404;
+                return View("HouseNotFound", id ?? 4);
+            }           
+
+            HouseEditViewModel model = new HouseEditViewModel
             { 
                 Id = house.Id,
                 Address = house.Address,
@@ -93,12 +101,14 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(HouseCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -125,12 +135,13 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
         {
             //firstly, goes checking for not found
 
-            logger.LogTrace("Trace Log");
-            logger.LogDebug("Debug Log");
-            logger.LogInformation("Information Log");
-            logger.LogWarning("Warning Log");
-            logger.LogError("Error Log");
-            logger.LogCritical("Critical Log");
+            //test log
+            //logger.LogTrace("Trace Log");
+            //logger.LogDebug("Debug Log");
+            //logger.LogInformation("Information Log");
+            //logger.LogWarning("Warning Log");
+            //logger.LogError("Error Log");
+            //logger.LogCritical("Critical Log");
 
 
             House house = _houseRepository.GetHouse(id??4);

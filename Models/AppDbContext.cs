@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GroundHouse.Models
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext//change DbCotext to IdentityDbContext for using IdentityCore
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -19,6 +20,7 @@ namespace GroundHouse.Models
         //by overriding below method we can seed some initial data
         protected override void OnModelCreating(ModelBuilder modelBuilder)//initializes only once
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Seed();//this is an extension method for clean code
         }
     }

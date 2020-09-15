@@ -6,6 +6,7 @@ using GroundHouse.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,12 +31,23 @@ namespace GroundHouse
                         options.UseSqlServer(_config.GetConnectionString("HouseDbConnection")));//adding db setting in services
             //services.AddDbContext<AppDbContext>();//differs by using the same instance of AppDbContext each time
 
+            //for customizing password complexity
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 8;//for 8 characters required
+                options.Password.RequiredUniqueChars = 2;//for 2 unique chars
+            });//we somehow can do the same with addIdentity<IdentityUser, IdentityRole>(=>)
+
             //AddMvcCore fails sometimes
             services.AddMvc(options => options.EnableEndpointRouting = false);//adding mvc services to dependency injection container
             services.AddScoped<IHouseRepository, SQLHouseRepository>();//convenient instrument
             //singleton - one time per application lifetime
             //trancient - one time per time it is requested
             //scoped - one per request within the scope(one per each http but same within other requests(like ajax))
+
+            services.AddIdentity<IdentityUser, IdentityRole>()//for identity core
+                    .AddEntityFrameworkStores<AppDbContext>();
+            //asp.net core uses built-in IdentityUser class to manage the details of registered users
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +96,9 @@ namespace GroundHouse
             app.UseStaticFiles();//this middleware allows us to use static files and after
                                  //that reverses pipeline(if url was ment to retrieve an existing static file)
                                  //app.UseMvcWithDefaultRoute();//adding mvc to pipeline
+
+            app.UseAuthentication();//for user authentication
+            //it is important to add it before useMvc()
 
             //app.UseMvc();//adds mvc without any routes
             //app.UseMvcWithDefaultRoute()
