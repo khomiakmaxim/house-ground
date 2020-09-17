@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace GroundHouse.Models
 {
-    public class AppDbContext : IdentityDbContext//change DbCotext to IdentityDbContext for using IdentityCore
+    //below <ApplicationUser> is for custom user model with additional fields
+    public class AppDbContext : IdentityDbContext<ApplicationUser>//change DbCotext to IdentityDbContext for using IdentityCore
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)

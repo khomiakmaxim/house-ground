@@ -48,13 +48,13 @@
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.7, )"
+              "version": "[3.1.8, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.7, )"
+              "version": "[3.1.8, )"
             },
             "NLog.Web.AspNetCore": {
               "target": "Package",
@@ -62,7 +62,7 @@
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[3.2.0, )"
             }
           },
           "imports": [

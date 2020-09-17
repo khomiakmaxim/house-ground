@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GroundHouse.Models;
 using GroundHouse.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,11 +13,11 @@ namespace GroundHouse.Controllers
     [Authorize]//if to use this attribute on controller level it will be applicable to all actions inside it
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager,//this instance is used for creating, deleteing and updating asyncly users
-                                SignInManager<IdentityUser> signInManager)//this one is for signInAsync, SignOutAsync, IsSignedId, etc
+        public AccountController(UserManager<ApplicationUser> userManager,//this instance is used for creating, deleteing and updating asyncly users
+                                SignInManager<ApplicationUser> signInManager)//this one is for signInAsync, SignOutAsync, IsSignedId, etc
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -95,10 +96,11 @@ namespace GroundHouse.Controllers
             if (ModelState.IsValid)
             {
                 //built-in user manager service works with IdenityUser, not RegisterViewModel
-                var user = new IdentityUser
+                var user = new ApplicationUser
                 { 
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    City = model.City
                 };
 
                 var result = await userManager.CreateAsync(user, model.Password);//adding user to DB

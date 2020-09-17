@@ -94,3 +94,6 @@ C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.csp
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\CreateRole.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\ListRoles.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\EditRole.cshtml.g.cs

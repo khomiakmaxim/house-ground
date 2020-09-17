@@ -45,7 +45,7 @@ namespace GroundHouse
             //trancient - one time per time it is requested
             //scoped - one per request within the scope(one per each http but same within other requests(like ajax))
 
-            services.AddIdentity<IdentityUser, IdentityRole>()//for identity core
+            services.AddIdentity<ApplicationUser, IdentityRole>()//for identity core
                     .AddEntityFrameworkStores<AppDbContext>();
             //asp.net core uses built-in IdentityUser class to manage the details of registered users
         }
