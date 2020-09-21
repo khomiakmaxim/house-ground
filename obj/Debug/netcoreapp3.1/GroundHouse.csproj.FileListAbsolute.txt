@@ -98,3 +98,5 @@ C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Adm
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\ListRoles.cshtml.g.cs
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\EditRole.cshtml.g.cs
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\EditUsersInRole.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Account\AccessDenied.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\ListUsers.cshtml.g.cs

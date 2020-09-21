@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GroundHouse.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -22,6 +22,13 @@ namespace GroundHouse.Controllers
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+        }
+
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
+            return View(users);
         }
 
         [HttpGet]

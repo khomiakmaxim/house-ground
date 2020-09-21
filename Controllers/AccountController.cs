@@ -23,6 +23,13 @@ namespace GroundHouse.Controllers
             this.signInManager = signInManager;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         //for server side email-in-use check
         //[HttpGet][HttpPost] or
         [AcceptVerbs("Get", "Post")]//get request cause of validation is applying get request by it's own
@@ -107,6 +114,11 @@ namespace GroundHouse.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("ListUsers", "Administration");        
+                    }
+
                     await signInManager.SignInAsync(user, isPersistent: false);//signing in user with session cookies(false)
                     return RedirectToAction("index", "home");
                 }
