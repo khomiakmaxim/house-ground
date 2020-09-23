@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<IdentityRole>
 
-@{ 
+@{
     ViewBag.Title = "List Roles";
 }
 
@@ -12,7 +12,7 @@
        asp-controller="administration">Add new role</a>
 
     foreach (var role in Model)
-    { 
+    {
         <div class="card-header">
             Role Id: @role.Id
         </div>
@@ -20,9 +20,21 @@
             <h5 class="card-title">@role.Name</h5>
         </div>
         <div class="card-footer">
-            <a asp-action="EditRole" asp-controller="Administration" asp-route-Id="@role.Id"
-               class="btn btn-primary">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            <form method="post" asp-action="DeleteRole" asp-route-roleId="@role.Id">
+                <a asp-action="EditRole" asp-controller="Administration" asp-route-Id="@role.Id"
+                   class="btn btn-primary">Edit</a>
+                <span id="confirmDeleteSpan_@role.Id" style="display:none">
+                    <span>Are you sure you want to delete?</span>
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                    <a class="btn btn-primary"
+                       onclick="confirmDelete('@role.Id', false)">No</a>
+                </span>
+
+                <span id="deleteSpan_@role.Id" style="color:white">
+                    <a class="btn btn-danger"
+                       onclick="confirmDelete('@role.Id', true)">Delete</a>
+                </span>
+            </form>
         </div>
     }
 }
@@ -42,4 +54,9 @@ else
             </a>
         </div>
     </div>
+}
+
+@section Scripts
+{
+    <script src="~/js/CustomScript.js"></script>
 }

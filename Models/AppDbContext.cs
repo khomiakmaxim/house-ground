@@ -23,6 +23,12 @@ namespace GroundHouse.Models
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Seed();//this is an extension method for clean code
+
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
+                    .SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
     }
 }
