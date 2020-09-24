@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using GroundHouse.Models;
 using GroundHouse.ViewModels;
@@ -21,7 +22,87 @@ namespace GroundHouse.Controllers
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-        }        
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult>//remoteError походу додає вже сам провайдер
+            ExternalLoginCallback(string returnUrl = null, string remoteError = null)//метод який буде викликаний провайдером
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");//отримуємо юрл повернення
+
+            LoginViewModel loginViewModel = new LoginViewModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList()//отримуємо наших провайдерів
+            };
+
+            if (remoteError != null)//якщо є якась помилка, надіслана провайдером
+            {
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return View("Login", loginViewModel);
+            }
+
+            var info = await signInManager.GetExternalLoginInfoAsync();//отрмуємо інформацію про спробу зайти через провайдера
+            if (info == null)
+            {
+                ModelState.AddModelError(string.Empty, "Error loading external login information");
+                return View("Login", loginViewModel);
+            }
+
+            //логінимо користувача в систему
+            var signedInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider,
+                                                     info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+
+            if (signedInResult.Succeeded)
+            {
+                return LocalRedirect(returnUrl);
+            }//it won`t succeed if the user is not in userLogins table yet
+            else
+            {
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);//finding email in provider info
+
+                if (email != null)
+                {
+                    var user = await userManager.FindByEmailAsync(email);
+
+                    if (user == null)//if there is no such registered user
+                    {
+                        user = new ApplicationUser
+                        {
+                            UserName = info.Principal.FindFirstValue(ClaimTypes.Name),
+                            Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        };
+
+                        await userManager.CreateAsync(user);//create such user
+                    }
+
+                    await userManager.AddLoginAsync(user, info);//adding login to userLogins table
+                    await signInManager.SignInAsync(user, isPersistent:false);//sign the user in
+
+                    return LocalRedirect(returnUrl);
+                }
+
+                //if we didn`t recieve email from external login provider
+                ViewBag.ErrorTitle = $"Email claim not recieved from : {info.LoginProvider}";
+                ViewBag.ErrorMessage = "Please contact support on khomiakmaxim@gmail.com";
+
+                return View("Error");
+            }            
+        }
+
+        //for external login providers
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            var redirecUrl = Url.Action("ExternalLoginCallback", "AccountController",
+                                       new { ReturnUrl = returnUrl});//provider will sent user back to ExternalLoginCallback wiht all this things
+
+            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirecUrl);//confusing
+
+            return new ChallengeResult(provider, properties);
+
+        }
 
         //for server side email-in-use check
         //[HttpGet][HttpPost] or
@@ -43,9 +124,15 @@ namespace GroundHouse.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login()
+        public async Task<IActionResult> Login(string returnUrl)//will automatically bind the value from url to this parameter
         {
-            return View();
+            LoginViewModel model = new LoginViewModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList()//all external login providers
+            };
+
+            return View(model);
         }
 
         [HttpPost]

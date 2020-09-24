@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authentication;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,5 +19,10 @@ namespace GroundHouse.ViewModels
 
         [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
+
+        //holds the url user trying to access before authentication
+        public string ReturnUrl { get; set; }//for external logins
+
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }//for external logins
     }
 }

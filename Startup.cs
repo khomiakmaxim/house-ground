@@ -75,6 +75,8 @@ namespace GroundHouse
                     {
                         policy.RequireClaim("Create Role", "true");
                     });
+
+                //working with facebook api for trusted external authenticatii                
             });
 
             //customizing /AccessDenied route
@@ -82,7 +84,14 @@ namespace GroundHouse
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = new PathString("/Administration/AccessDenied");
-            });             
+            });
+
+            services.AddAuthentication()
+                .AddFacebook(options =>
+                {
+                    options.ClientId = "969860950092293";
+                    options.ClientSecret = "8af49f6fed177081d47224b4028652d5";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

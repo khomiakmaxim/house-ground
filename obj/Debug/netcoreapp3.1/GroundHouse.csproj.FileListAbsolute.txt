@@ -90,8 +90,6 @@ C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.AspNe
 C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll
-C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.csproj.CoreCompileInputs.cache
-C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\CreateRole.cshtml.g.cs
@@ -103,3 +101,6 @@ C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Adm
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\ManageUserRoles.cshtml.g.cs
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\ManageUserClaims.cshtml.g.cs
 C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\Razor\Views\Administration\AccessDenied.cshtml.g.cs
+C:\Users\Maksym\source\repos\GroundHouse\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.Facebook.dll
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.csproj.CoreCompileInputs.cache
+C:\Users\Maksym\source\repos\GroundHouse\obj\Debug\netcoreapp3.1\GroundHouse.MvcApplicationPartsAssemblyInfo.cache

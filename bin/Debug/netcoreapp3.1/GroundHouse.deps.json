@@ -24,11 +24,12 @@
     ".NETCoreApp,Version=v3.1": {
       "GroundHouse/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Facebook": "3.1.8",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.8",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.8",
           "Microsoft.EntityFrameworkCore.Tools": "3.1.8",
           "NLog.Web.AspNetCore": "4.9.3",
-          "Pomelo.EntityFrameworkCore.MySql": "3.2.0",
+          "Pomelo.EntityFrameworkCore.MySql": "3.2.1",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.1.0.0",
@@ -300,6 +301,17 @@
         },
         "compile": {
           "GroundHouse.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Facebook/3.1.8": {
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Facebook.dll": {
+            "assemblyVersion": "3.1.8.0",
+            "fileVersion": "3.100.820.42106"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Authentication.Facebook.dll": {}
         }
       },
       "Microsoft.AspNetCore.Cryptography.Internal/3.1.8": {
@@ -827,7 +839,7 @@
           "lib/netcoreapp3.0/NLog.Web.AspNetCore.dll": {}
         }
       },
-      "Pomelo.EntityFrameworkCore.MySql/3.2.0": {
+      "Pomelo.EntityFrameworkCore.MySql/3.2.1": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "3.1.8",
           "MySqlConnector": "0.69.9",
@@ -835,8 +847,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Pomelo.EntityFrameworkCore.MySql.dll": {
-            "assemblyVersion": "3.2.0.0",
-            "fileVersion": "3.2.0.0"
+            "assemblyVersion": "3.2.1.0",
+            "fileVersion": "3.2.1.0"
           }
         },
         "compile": {
@@ -3066,6 +3078,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Microsoft.AspNetCore.Authentication.Facebook/3.1.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ytgKz8ARJw7iHlqexXcv9HfH1VMIqosNwg233prUtPwsyjtE9hYU1EYz1+b/25h+ms3z2gunGSpFXeLOS3tikg==",
+      "path": "microsoft.aspnetcore.authentication.facebook/3.1.8",
+      "hashPath": "microsoft.aspnetcore.authentication.facebook.3.1.8.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Cryptography.Internal/3.1.8": {
       "type": "package",
       "serviceable": true,
@@ -3353,12 +3372,12 @@
       "path": "nlog.web.aspnetcore/4.9.3",
       "hashPath": "nlog.web.aspnetcore.4.9.3.nupkg.sha512"
     },
-    "Pomelo.EntityFrameworkCore.MySql/3.2.0": {
+    "Pomelo.EntityFrameworkCore.MySql/3.2.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-uiI4fLHIrkbvLkahiEnRa2ilD5aRQyjdSUEfZZqZAQmW56NATXBDS+zeZeg3jAdahqjnSDsCop7VjVBkEo5B+w==",
-      "path": "pomelo.entityframeworkcore.mysql/3.2.0",
-      "hashPath": "pomelo.entityframeworkcore.mysql.3.2.0.nupkg.sha512"
+      "sha512": "sha512-gM8s6rckXRp3uknTS6WVTYJI4byn+DWc9BsOTN5zTbksw/WB4RFcN+NSlWoTI4/1GGxSy7paoFq/99jq5wUNFQ==",
+      "path": "pomelo.entityframeworkcore.mysql/3.2.1",
+      "hashPath": "pomelo.entityframeworkcore.mysql.3.2.1.nupkg.sha512"
     },
     "Pomelo.JsonObject/2.2.1": {
       "type": "package",

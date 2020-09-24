@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "qrbj5p4zcSa5p2UCEjKizRzNqCekDX3ooDKWjxqIx/vNYua3FsamP1IatUCQMdypMWNao5NS9FthihX30jxKtw==",
+  "dgSpecHash": "ObJ34wXddj7OCu8CRTSKBVBTeymvDnSi/BNPY8vJZYWxMJ+jA8FxHFzm1NONkiygxD1+XFYtig4zx5lpUsIbag==",
   "success": true,
   "projectFilePath": "C:\\Users\\Maksym\\source\\repos\\GroundHouse\\GroundHouse.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Maksym\\.nuget\\packages\\microsoft.aspnetcore.authentication.facebook\\3.1.8\\microsoft.aspnetcore.authentication.facebook.3.1.8.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.8\\microsoft.aspnetcore.cryptography.internal.3.1.8.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.8\\microsoft.aspnetcore.cryptography.keyderivation.3.1.8.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.8\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.8.nupkg.sha512",
@@ -45,7 +46,7 @@
     "C:\\Users\\Maksym\\.nuget\\packages\\nlog\\4.7.2\\nlog.4.7.2.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\nlog.extensions.logging\\1.6.4\\nlog.extensions.logging.1.6.4.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\nlog.web.aspnetcore\\4.9.3\\nlog.web.aspnetcore.4.9.3.nupkg.sha512",
-    "C:\\Users\\Maksym\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\3.2.0\\pomelo.entityframeworkcore.mysql.3.2.0.nupkg.sha512",
+    "C:\\Users\\Maksym\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\3.2.1\\pomelo.entityframeworkcore.mysql.3.2.1.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\pomelo.jsonobject\\2.2.1\\pomelo.jsonobject.2.2.1.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
     "C:\\Users\\Maksym\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
