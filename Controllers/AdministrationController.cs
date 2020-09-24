@@ -40,7 +40,7 @@ namespace GroundHouse.Controllers
                 return View("NotFound");
             }
 
-            var userClaims = await userManager.GetClaimsAsync(user);
+            var existingUserClaims = await userManager.GetClaimsAsync(user);
 
             var model = new UserClaimsViewModel
             {
@@ -54,11 +54,47 @@ namespace GroundHouse.Controllers
                     ClaimType = claim.Type
                 };
 
-                //If the user has the claim, set IsSelected property to true, so the checkbox
-                //next to the claim is checked on the UI                
+                if (existingUserClaims.Any(c => c.Type == claim.Type))
+                {
+                    userClaim.IsSelected = true;//default is false
+                }
+
+                model.Claims.Add(userClaim);
             }
 
-            return View();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManageUserClaims(UserClaimsViewModel model)
+        {
+            var user = await userManager.FindByIdAsync(model.UserId);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {model.UserId} was not found";
+                return View("NotFound");
+            }
+
+            var claims = await userManager.GetClaimsAsync(user);
+            var result = await userManager.RemoveClaimsAsync(user, claims);//deleting all of the claims that user has
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot remove user existing claims");
+                return View(model);
+            }
+
+            result = await userManager.AddClaimsAsync(user,
+                model.Claims.Where(c => c.IsSelected).Select(c => new Claim(c.ClaimType, c.ClaimType)));
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot add selected claims to user");
+                return View(model);
+            }
+
+            return RedirectToAction("EditUser", new { Id = model.UserId});
         }
 
         [HttpGet]
@@ -215,13 +251,45 @@ namespace GroundHouse.Controllers
                 Email = user.Email,
                 UserName = user.UserName,
                 City = user.City,
-                Claims = userClaims.Select(c => c.Type + " : " + c.Value).ToList(),
+                Claims = userClaims.Select(c => c.Type).ToList(),
                 Roles = userRoles
             };
 
             return View(model);
 
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        {
+            var user = await userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                user.Email = model.Email;
+                user.UserName = model.UserName;
+                user.City = model.City;
+
+                var result = await userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
         }
 
         [HttpGet]
