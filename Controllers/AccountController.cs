@@ -21,14 +21,7 @@ namespace GroundHouse.Controllers
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
+        }        
 
         //for server side email-in-use check
         //[HttpGet][HttpPost] or

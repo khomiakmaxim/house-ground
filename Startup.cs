@@ -48,6 +48,41 @@ namespace GroundHouse
             services.AddIdentity<ApplicationUser, IdentityRole>()//for identity core
                     .AddEntityFrameworkStores<AppDbContext>();
             //asp.net core uses built-in IdentityUser class to manage the details of registered users
+
+            //creating policy for claims based authorization
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DeleteRolePolicy",
+                     policy =>
+                     {
+                         policy.RequireClaim("Delete Role", "true");//as much as you want(or just chain another requireClaim)
+                     });
+
+                //options.AddPolicy("EditRolePolicy", // this works only if use claim types without values
+                //    policy =>
+                //    {
+                //        policy.RequireClaim("Edit Role");
+                //    });
+
+                options.AddPolicy("EditRolePolicy",
+                    policy =>
+                    {
+                        policy.RequireClaim("Edit Role", "true");
+                    });
+
+                options.AddPolicy("CreateRolePolicy",
+                    policy =>
+                    {
+                        policy.RequireClaim("Create Role", "true");
+                    });
+            });
+
+            //customizing /AccessDenied route
+            //default is /Account/AccessDenied
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = new PathString("/Administration/AccessDenied");
+            });             
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

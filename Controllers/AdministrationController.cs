@@ -30,13 +30,20 @@ namespace GroundHouse.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> ManageUserClaims(string id)
         {
             var user = await userManager.FindByIdAsync(id);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with id = {id} was not found";
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
             }
 
@@ -54,9 +61,11 @@ namespace GroundHouse.Controllers
                     ClaimType = claim.Type
                 };
 
-                if (existingUserClaims.Any(c => c.Type == claim.Type))
+                //If the user has the claim, set IsSelected property to true, so the checkbox
+                //next to the claim is checked on the UI
+                if (existingUserClaims.Any(c => c.Type == claim.Type && c.Value == "true"))
                 {
-                    userClaim.IsSelected = true;//default is false
+                    userClaim.IsSelected = true;
                 }
 
                 model.Claims.Add(userClaim);
@@ -72,12 +81,13 @@ namespace GroundHouse.Controllers
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {model.UserId} was not found";
+                ViewBag.ErrorMessage = $"User with Id = {model.UserId} cannot be found";
                 return View("NotFound");
             }
 
+            // Get all the user existing claims and delete them
             var claims = await userManager.GetClaimsAsync(user);
-            var result = await userManager.RemoveClaimsAsync(user, claims);//deleting all of the claims that user has
+            var result = await userManager.RemoveClaimsAsync(user, claims);
 
             if (!result.Succeeded)
             {
@@ -85,8 +95,9 @@ namespace GroundHouse.Controllers
                 return View(model);
             }
 
+            // Add all the claims that are selected on the UI
             result = await userManager.AddClaimsAsync(user,
-                model.Claims.Where(c => c.IsSelected).Select(c => new Claim(c.ClaimType, c.ClaimType)));
+                model.Claims.Select(c => new Claim(c.ClaimType, c.IsSelected ? "true" : "false")));
 
             if (!result.Succeeded)
             {
@@ -94,7 +105,8 @@ namespace GroundHouse.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("EditUser", new { Id = model.UserId});
+            return RedirectToAction("EditUser", new { Id = model.UserId });
+
         }
 
         [HttpGet]
@@ -169,6 +181,7 @@ namespace GroundHouse.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "DeleteRolePolicy")]
         public async Task<IActionResult> DeleteRole(string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
@@ -251,7 +264,7 @@ namespace GroundHouse.Controllers
                 Email = user.Email,
                 UserName = user.UserName,
                 City = user.City,
-                Claims = userClaims.Select(c => c.Type).ToList(),
+                Claims = userClaims.Select(c => c.Type + " : " + c.Value).ToList(),
                 Roles = userRoles
             };
 
@@ -379,6 +392,7 @@ namespace GroundHouse.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
@@ -407,6 +421,7 @@ namespace GroundHouse.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
             var role = await roleManager.FindByIdAsync(model.Id);
@@ -442,12 +457,14 @@ namespace GroundHouse.Controllers
 
 
         [HttpGet]
+        [Authorize(Policy ="CreateRolePolicy")]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Policy = "CreateRolePolicy")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
