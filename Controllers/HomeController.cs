@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GroundHouse.Models;
+using GroundHouse.Security;
 using GroundHouse.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,14 +20,20 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
         private readonly IHouseRepository _houseRepository;
         private readonly IHostingEnvironment hostingEnvironment;
         private readonly ILogger<HomeController> logger;
+        private readonly IDataProtector protector;
 
         public HomeController(IHouseRepository houseRepository,
                               IHostingEnvironment hostingEnvironment,
-                              ILogger<HomeController> logger)
+                              ILogger<HomeController> logger,
+                              IDataProtectionProvider dataProtectionProvider,
+                              DataProtectionPurposeStrings dataProtectionPurposeStrings)
         {
             _houseRepository = houseRepository;
             this.hostingEnvironment = hostingEnvironment;
             this.logger = logger;
+            protector = dataProtectionProvider
+                            .CreateProtector(dataProtectionPurposeStrings.HouseIdRouteValue);//there is some logic behind that
+
         }
 
         [HttpGet]
@@ -132,7 +140,7 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Details(int? id)
+        public IActionResult Details(string id)
         {
             //firstly, goes checking for not found
 
@@ -144,13 +152,15 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
             //logger.LogError("Error Log");
             //logger.LogCritical("Critical Log");
 
+            int decryptedId = int.Parse(protector.Unprotect(id));
 
-            House house = _houseRepository.GetHouse(id??4);
+
+            House house = _houseRepository.GetHouse(decryptedId);
 
             if (house == null)
             {
                 Response.StatusCode = 404;
-                return View("HouseNotFound", id??4);
+                return View("HouseNotFound", id);
             }
 
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
@@ -165,7 +175,12 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
         [AllowAnonymous]
         public IActionResult Index()
         {
-            var model = _houseRepository.GetAllHouses();
+            var model = _houseRepository.GetAllHouses()//sets all encrypted id values
+                                    .Select(e =>
+                                    {
+                                        e.EncryptedId = protector.Protect(e.Id.ToString());
+                                        return e;
+                                    });
             return View(model);
         }        
     }

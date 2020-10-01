@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,8 @@ namespace GroundHouse.Models
     public class House
     {
         public int Id { get; set; }
-
+        [NotMapped]//it won`t be mapped as database attribute
+        public string EncryptedId { get; set; }
         [Required]
         [EmailAddress]
         [MaxLength(50, ErrorMessage = "Address should contain <= 50 characters")]

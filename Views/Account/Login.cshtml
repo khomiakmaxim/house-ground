@@ -27,6 +27,9 @@
                             <input asp-for="RememberMe" />
                             @Html.DisplayNameFor(m => m.RememberMe)
                         </label>
+                        <div>
+                            <a asp-action="ForgotPassword">Forgot Password?</a>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>

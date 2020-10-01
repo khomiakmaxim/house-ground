@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GroundHouse.Models;
+using GroundHouse.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +28,11 @@ namespace GroundHouse
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+                        o.TokenLifespan = TimeSpan.FromHours(5));//now all tokens will expire in 5 hours
+
+            //above code can customize concrete token's lifespan(not generally)
+
             services.AddDbContextPool<AppDbContext>(options =>
                         options.UseSqlServer(_config.GetConnectionString("HouseDbConnection")));//adding db setting in services
             //services.AddDbContext<AppDbContext>();//differs by using the same instance of AppDbContext each time
@@ -36,6 +42,11 @@ namespace GroundHouse
             {
                 options.Password.RequiredLength = 8;//for 8 characters required
                 options.Password.RequiredUniqueChars = 2;//for 2 unique chars
+
+                options.SignIn.RequireConfirmedAccount = true;//only confirmed accounts is able to sign in
+
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
             });//we somehow can do the same with addIdentity<IdentityUser, IdentityRole>(=>)
 
             //AddMvcCore fails sometimes
@@ -45,8 +56,11 @@ namespace GroundHouse
             //trancient - one time per time it is requested
             //scoped - one per request within the scope(one per each http but same within other requests(like ajax))
 
+            services.AddSingleton<DataProtectionPurposeStrings>();
+
             services.AddIdentity<ApplicationUser, IdentityRole>()//for identity core
-                    .AddEntityFrameworkStores<AppDbContext>();
+                    .AddEntityFrameworkStores<AppDbContext>()//also needed
+                    .AddDefaultTokenProviders();//for email confirmation
             //asp.net core uses built-in IdentityUser class to manage the details of registered users
 
             //creating policy for claims based authorization
