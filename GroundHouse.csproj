@@ -6,7 +6,7 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>6b41fda6-b895-4f3a-8207-f1e22502e08b</UserSecretsId>
   <!--There are several hosting models in asp OutOfProcess(Kestrel) is default
-  InProcess is IIS(w3wp.exe)
+  InProcess is IIS Express(w3wp.exe)
   InProcess hosting allows much faster performance
   OutOfProcess has internal(Kestrel) and external(IIS or Nginx or Apache) servers-->
   </PropertyGroup>

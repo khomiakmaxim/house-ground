@@ -366,7 +366,7 @@ namespace GroundHouse.Controllers
         {                                                                             //it is also possibly because we've applied the
 
             model.ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();//for avoiding null refferences exception
-            if (ModelState.IsValid)                                                     //same name for paparameter as it is in qurey string
+            if (ModelState.IsValid)                               //same name for paparameter as it is in qurey string
             {
 
                 var user = await userManager.FindByEmailAsync(model.Email);

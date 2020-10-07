@@ -112,7 +112,7 @@ namespace GroundHouse.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageUserRoles(string id)
         {
-            ViewBag.userId = id;
+            ViewBag.userId = id;//using viewbag to avoid userId repetition
 
             var user = await userManager.FindByIdAsync(id);
 
@@ -149,7 +149,9 @@ namespace GroundHouse.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string id)
+        public async Task<IActionResult>
+            ManageUserRoles(List<UserRolesViewModel> model, string id)
+            //userId comes from url on previous get request
         {
             var user = await userManager.FindByIdAsync(id);
 
@@ -271,7 +273,7 @@ namespace GroundHouse.Controllers
             return View(model);
 
 
-        }
+        }        
 
         [HttpPost]
         public async Task<IActionResult> EditUser(EditUserViewModel model)
@@ -364,7 +366,7 @@ namespace GroundHouse.Controllers
             for (int i = 0; i < model.Count; ++i)
             {
                 var user = await userManager.FindByIdAsync(model[i].UserId);
-                IdentityResult result = null;
+                IdentityResult result;
 
                 if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
                 {
@@ -384,7 +386,7 @@ namespace GroundHouse.Controllers
                     if (i < (model.Count - 1))
                         continue;
                     else
-                        return RedirectToAction("EditRole", new { Id = roleId});
+                        return RedirectToAction("EditRole", new { Id = roleId });
                 }
             }            
 
@@ -464,7 +466,7 @@ namespace GroundHouse.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "CreateRolePolicy")]
+        [Authorize(Policy = "CreateRolePolicy")]//only users with this policy will be allowed to get to this action
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -474,7 +476,7 @@ namespace GroundHouse.Controllers
                     Name = model.RoleName,
                 };
 
-                IdentityResult result = await roleManager.CreateAsync(identityRole);
+                IdentityResult result = await roleManager.CreateAsync(identityRole);                
 
                 if (result.Succeeded)
                 {
@@ -483,12 +485,11 @@ namespace GroundHouse.Controllers
 
                 foreach (IdentityError err in result.Errors)
                 {
-                    ModelState.AddModelError("", err.Description);
+                    ModelState.AddModelError(string.Empty, err.Description);
                 }
             }
 
             return View(model);
-
         }
     }
 }

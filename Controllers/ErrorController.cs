@@ -14,48 +14,45 @@ namespace GroundHouse.Controllers
         private readonly ILogger<ErrorController> logger;
 
         //below generic parameter allows to know who exactly threw an exception
-        public ErrorController(ILogger<ErrorController> logger)//injection logger using dependency injection
+        public ErrorController(ILogger<ErrorController/*this parameter*/> logger)//injection logger via dependency injection
         {
             this.logger = logger;
         }
-
+        
         [Route("/Error/{statusCode}")]//attribute routing with placeholding
         public IActionResult HttpStatusCodeHandler(int statusCode)
         {
             //we can use this only with ReExecute()
             var statusCodeResult = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
-            //retrieving info about that request
 
+            //retrieving info about that request
             switch (statusCode)
             {
-
-                case 404://this thing can actually handle all of the status codes
+                //this thing can actually handle all of the status codes
+                case 404:
                     ViewBag.ErrorMessage = "Sorry, the resource you requested was not found";
 
-                    logger.LogWarning($"404 Error Ocurred. Path = {statusCodeResult.OriginalPath} + " +
+                    logger.LogWarning($"404 Error Ocurred. Path = {statusCodeResult.OriginalPath}" +
+                        $"and QueryString = {statusCodeResult.OriginalQueryString}");            
+                    break;
+                default:
+                    ViewBag.ErrorMessage = "Client side error ocurred";
+                    logger.LogWarning($"Client side error ocurred. Path = {statusCodeResult} " +
                         $"and QueryString = {statusCodeResult.OriginalQueryString}");
-                    //ViewBag.Path = statusCodeResult.OriginalPath;//filling up the error view with all helpful info
-                    //ViewBag.QS = statusCodeResult.OriginalQueryString;
-                    break;  
+                    break;
             }
-
             return View("NotFound");
         }
 
-        [Route("/Error")]
-        [AllowAnonymous]
+        //this handles serves global errors
+        [Route("/Error")]        
         public IActionResult Error()
         {
             //below object will have all the info about exception that happened
             var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
 
             logger.LogError($"The path {exceptionDetails.Path}" +
-                $" threw an exception {exceptionDetails.Error}");            
-
-            //ViewBag.ExceptionPath = exceptionDetails.Path;
-            //ViewBag.ExceptionMessage = exceptionDetails.Error.Message;
-            //ViewBag.StackTrace = exceptionDetails.Error.StackTrace;
-
+                $" threw an exception {exceptionDetails.Error}");          
             return View("Error");
         }
     }

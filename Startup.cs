@@ -18,7 +18,7 @@ namespace GroundHouse
 {
     public class Startup
     {
-        private IConfiguration _config;
+        private IConfiguration _config;//this field is used for basic configuring
 
         public Startup(IConfiguration config)
         {
@@ -53,17 +53,17 @@ namespace GroundHouse
             services.AddMvc(options => options.EnableEndpointRouting = false);//adding mvc services to dependency injection container
             services.AddScoped<IHouseRepository, SQLHouseRepository>();//convenient instrument
             //singleton - one time per application lifetime
-            //trancient - one time per time it is requested
+            //trancient - one time per it is requested
             //scoped - one per request within the scope(one per each http but same within other requests(like ajax))
 
-            services.AddSingleton<DataProtectionPurposeStrings>();
+            services.AddSingleton<DataProtectionPurposeStrings>();//for adding via di in constructor
 
             services.AddIdentity<ApplicationUser, IdentityRole>()//for identity core
                     .AddEntityFrameworkStores<AppDbContext>()//also needed
                     .AddDefaultTokenProviders();//for email confirmation
             //asp.net core uses built-in IdentityUser class to manage the details of registered users
 
-            //creating policy for claims based authorization
+            //creating policy for claims based authorization(roles based authorization doesn't need that)
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("DeleteRolePolicy",
@@ -90,8 +90,19 @@ namespace GroundHouse
                         policy.RequireClaim("Create Role", "true");
                     });
 
-                //working with facebook api for trusted external authenticatii                
+                options.AddPolicy("DeleteHomePolicy",
+                    policy =>
+                    {
+                        policy.RequireClaim("Delete Home", "true");
+                    });
+
+                options.AddPolicy("EditHomePolicy",
+                    policy =>
+                    { 
+                        policy.RequireClaim("Edit Home", "true");
+                    });
             });
+            //roles are actually claims with type "role"
 
             //customizing /AccessDenied route
             //default is /Account/AccessDenied
@@ -100,8 +111,9 @@ namespace GroundHouse
                 options.AccessDeniedPath = new PathString("/Administration/AccessDenied");
             });
 
+            //working with facebook api for trusted external authentication 
             services.AddAuthentication()
-                .AddFacebook(options =>
+                .AddFacebook(options =>//similar for google, etc(nu-get pckg needed)
                 {
                     options.ClientId = "969860950092293";
                     options.ClientSecret = "8af49f6fed177081d47224b4028652d5";
@@ -120,12 +132,12 @@ namespace GroundHouse
                 {
                     SourceCodeLineCount = 7//7 lines will be shown 
                 };
-                app.UseDeveloperExceptionPage(developerExceptionPageOptions);//middleware for exceptions(alternative
+                app.UseDeveloperExceptionPage(developerExceptionPageOptions);//middleware for exceptions(alternative)
+                                                                             //for yellow SOD in Framework)
             }
-            else if (env.IsStaging() || env.IsProduction() || env.IsEnvironment("XYZ"))//for yellow SOD in Framework)
+            else if (env.IsStaging() || env.IsProduction() || env.IsEnvironment("XYZ"))
             {
-                app.UseExceptionHandler("/Error");//for global errors handling
-
+                app.UseExceptionHandler("/Error");//for global errors handling                
                 //app.UseStatusCodePages();//just shows status code
                 //app.UseStatusCodePagesWithRedirects("/Error/{0}");//400-500 range
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");//it somehow puts the status code in placeholder here
@@ -155,7 +167,7 @@ namespace GroundHouse
                                  //that reverses pipeline(if url was ment to retrieve an existing static file)
                                  //app.UseMvcWithDefaultRoute();//adding mvc to pipeline
 
-            app.UseAuthentication();//for user authentication
+            app.UseAuthentication();//for user authentication(roled based/claim based)
             //it is important to add it before useMvc()
 
             //app.UseMvc();//adds mvc without any routes
