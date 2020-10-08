@@ -55,7 +55,7 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
 
         [HttpGet]
         [Authorize(Policy = "EditHomePolicy")]
-        public IActionResult Edit(string id)//int? is nullable here and it has a reason for it
+        public IActionResult Edit(string id)
         {
             int decryptedId = int.Parse(protector.Unprotect(id));
             House house = _houseRepository.GetHouse(decryptedId);
@@ -80,6 +80,7 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
         }
 
         [HttpPost]
+        [Authorize(Policy = "EditHomePolicy")]
         public IActionResult Edit(HouseEditViewModel model)
         {
             if (ModelState.IsValid)
@@ -128,13 +129,15 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
             return uniqueFileName;//if model has Photo unset => client hasn't set photo(default photo will be rendered)
         }
 
-        [HttpGet]        
+        [HttpGet]
+        [Authorize(Policy = "CreateHomePolicy")]
         public ViewResult Create()
         {
             return View();
         }
 
-        [HttpPost]        
+        [HttpPost]
+        [Authorize(Policy = "CreateHomePolicy")]
         public IActionResult Create(HouseCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -151,7 +154,7 @@ namespace GroundHouse.Controllers//it is the controller who handles the http req
                 };
 
                 _houseRepository.Add(newHouse);//this method generates id value
-                return RedirectToAction("details", new { id = newHouse.Id });//this statement redirects request to another action
+                return RedirectToAction("details", new { id = protector.Protect(newHouse.Id.ToString()) });//this statement redirects request to another action
             }
 
             return View();//if ModelState is not valid view will render all errors

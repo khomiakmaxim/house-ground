@@ -1,6 +1,8 @@
 ﻿using GroundHouse.Models;
+using GroundHouse.Security;
 using GroundHouse.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,14 +21,19 @@ namespace GroundHouse.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<AdministrationController> logger;
+        private readonly IDataProtector protector;
 
         public AdministrationController(RoleManager<IdentityRole> roleManager,
                                         UserManager<ApplicationUser> userManager,
-                                        ILogger<AdministrationController> logger)
+                                        ILogger<AdministrationController> logger,
+                                        IDataProtectionProvider dataProtectionProvider,
+                                        DataProtectionPurposeStrings dataProtectionPurposeStrings)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.logger = logger;
+            protector = dataProtectionProvider
+                            .CreateProtector(dataProtectionPurposeStrings.HouseIdRouteValue);
         }
 
         [HttpGet]
@@ -110,15 +117,15 @@ namespace GroundHouse.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageUserRoles(string id)
+        public async Task<IActionResult> ManageUserRoles(string userId)
         {
-            ViewBag.userId = id;//using viewbag to avoid userId repetition
+            ViewBag.userId = userId;//using viewbag to avoid userId repetition
 
-            var user = await userManager.FindByIdAsync(id);
+            var user = await userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {id} was not found";
+                ViewBag.ErrorMessage = $"User with Id = {userId} was not found";
                 return View("NotFound");
             }
 
@@ -150,14 +157,14 @@ namespace GroundHouse.Controllers
 
         [HttpPost]
         public async Task<IActionResult>
-            ManageUserRoles(List<UserRolesViewModel> model, string id)
+            ManageUserRoles(List<UserRolesViewModel> model, string userId)
             //userId comes from url on previous get request
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = await userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
                 return View("NotFound");
             }
 
@@ -179,7 +186,7 @@ namespace GroundHouse.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("EditUser", new { Id = id});
+            return RedirectToAction("EditUser", new { Id = userId });
         }
 
         [HttpPost]

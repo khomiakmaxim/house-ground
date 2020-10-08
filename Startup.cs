@@ -101,6 +101,12 @@ namespace GroundHouse
                     { 
                         policy.RequireClaim("Edit Home", "true");
                     });
+
+                options.AddPolicy("CreateHomePolicy",
+                    policy =>
+                    {
+                        policy.RequireClaim("Create Home", "true");
+                    });
             });
             //roles are actually claims with type "role"
 

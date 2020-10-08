@@ -14,7 +14,8 @@ namespace GroundHouse.Models
             new Claim("Edit Role", "Edit Role"),
             new Claim("Delete Role", "Delete Role"),
             new Claim("Delete Home", "Delete Home"),
-            new Claim("Edit Home", "Edit Home")
+            new Claim("Edit Home", "Edit Home"),
+            new Claim("Create Home", "Create Home")
         };
 
 
