@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
 
 namespace GroundHouse.Controllers
 {
@@ -442,6 +445,22 @@ namespace GroundHouse.Controllers
                                             new { userId = user.Id, token = token}, Request.Scheme);//confirmation Link
 
                     logger.Log(LogLevel.Warning, confirmationLink);//logging confirmation link
+
+                    //code below sends message to user email(smtp error)
+                    //MailMessage mm = new MailMessage();
+                    //mm.To.Add(user.Email);
+                    //mm.Subject = "Confirm your registration";
+                    //mm.Body = $"hey {user.Email}! Confirm your registration by clicking on {confirmationLink}, please";
+
+                    //mm.From = new MailAddress("khomiakmaxim@gmail.com");
+                    //mm.IsBodyHtml = false;
+                    //SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                    //smtp.Port = 587;
+                    //smtp.UseDefaultCredentials = true;
+                    //smtp.EnableSsl = false;
+
+                    //smtp.Credentials = new NetworkCredential("sabalsurban@gmail.com", "05qfmy2lsb");
+                    //smtp.Send(mm);
 
                     if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     {

@@ -27,7 +27,7 @@ namespace GroundHouse.Models
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
                     .SelectMany(e => e.GetForeignKeys()))
             {
-                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;//for normalizing deleting a row if it is set as foreign key in other table
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
         }
     }

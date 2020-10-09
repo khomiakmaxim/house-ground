@@ -228,6 +228,7 @@ namespace GroundHouse.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);
@@ -238,14 +239,36 @@ namespace GroundHouse.Controllers
                 return View("NotFound");
             }
 
-            var result = await userManager.DeleteAsync(user);
+            var claims = await userManager.GetClaimsAsync(user);
+            var result1 = await userManager.RemoveClaimsAsync(user, claims);
+            if (!result1.Succeeded)
+            {
+                ViewBag.ErrorMessage = "DataBase operation failed.";
+                return View("Error");                
+            }
 
-            if (result.Succeeded)
+            //for proper work user claims shoud be deleted first
+
+            IdentityResult result2;
+            try
+            { 
+                result2 = await userManager.DeleteAsync(user);
+            }
+            catch (DbUpdateException exc)
+            {
+                ViewBag.ErrorTitle = "Data base invalid operation";
+                ViewBag.ErrorMessage = "You are trying to delete the user, which is connected to existing roles. " +
+                                        "Remove user from those roles and try again.";
+                logger.LogError(exc.Message);
+                return View("Error");
+            }
+
+            if (result2.Succeeded)
             {
                 return RedirectToAction("ListUsers");
             }
 
-            foreach (var error in result.Errors)
+            foreach (var error in result2.Errors)
             {
                 ModelState.AddModelError("", error.Description);
             }
